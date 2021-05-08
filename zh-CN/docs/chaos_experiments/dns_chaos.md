@@ -1,74 +1,74 @@
 ---
-id: dnschaos_experiment
-title: DNSChaos Experiment
-sidebar_label: DNSChaos Experiment
+id: dnschaos_experience
+title: DNSChaos 测试
+sidebar_label: DNSChaos 测试
 ---
 
-This document describes how to create DNSChaos experiments in Chaos Mesh.
+本文档描述如何在Chaos Mesh中创建 DNSChaos 实验。
 
-DNSChaos allows you to simulate fault DNS responses such as a DNS error or a random IP address after a request is sent.
+DNSChaos 允许你在发送请求后模拟故障DNS响应，如DNS错误或随机IP地址。
 
-## Deploy DNS service for chaos
+## 部署故障的DNS服务
 
-To create DNSChaos experiments in Chaos Mesh, you need to deploy a DNS service in Chaos Mesh by executing the command below:
+要在 Chaos Mesh中创建 DNSChaos 实验，你需要在Chaos Mesh中部署一个 DNS 服务，执行下面的命令：
 
 ```bash
 helm upgrade chaos-mesh chaos-mesh/chaos-mesh --namespace=chaos-testing --set dnsServer.create=true
 ```
 
-When the deployment finishes, check the status of this DNS service:
+当部署结束时，检查此DNS服务的状态：
 
 ```bash
 kubectl get pods -n chaos-testing -l app.kubernetes.io/component=chaos-dns-server
 ```
 
-Make sure the Pod's `STATUS` is `Running`.
+请确保Pod的 `STATUS` 是 `正在运行`。
 
-## Configuration file
+## 配置文件
 
-Below is a sample DNSChaos configuration file:
+下面是一个 DNSChaos 配置文件样本：
 
 ```yaml
-apiVersion: chaos-mesh.org/v1alpha1
-kind: DNSChaos
-metadata:
+apiVersion: chaos-mesh。 rg/v1alpha1
+型: DNSChaos
+metadata :
   name: busybox-dns-chaos
 spec:
-  action: random
-  patterns:
-    - google.com
-    - chaos-mesh.*
-    - github.?om
-  mode: all
-  selector:
-    namespaces:
+  随机动作:
+  模式:
+    - google。 om
+    - chaos-网格.
+    - github. om
+  模式：所有
+  选择器：
+    命名空间：
       - busybox
-  duration: '90s'
-  scheduler:
-    cron: '@every 100s'
+  持续时间：'90s'
+  scheduler：
+    cron：'@每 100'
 ```
 
-For more sample files, see [examples](https://github.com/chaos-mesh/chaos-mesh/tree/master/examples). You can edit them as needed.
+欲了解更多样本文件，请参阅 [示例](https://github.com/chaos-mesh/chaos-mesh/tree/master/examples)。 你可以根据需要编辑它们。
 
-## Fields description
+## 字段描述
 
-- **action**: Defines the chaos action for DNS chaos. Supported actions are:
+- **动作**: 定义DNS chaos的chaos动作。 支持的行动是：
 
-  - `error` - Get an error when sending the DNS request
-  - `random` - Get a random IP when sending the DNS request
+  - `错误` - 发送DNS请求时出错
+  - `随机` - 发送DNS请求时获得一个随机IP
 
-- **patterns**: Choose which domain names to take effect, support the placeholder ? and wildcard \*, or the specified domain name.
+- **模式**: 选择要生效的域名, 支持占位符? 和通配符 \*，或指定的域名。
 
-  - The wildcard `_` must be at the end of the string. For example, `chaos-_.org` is invalid.
-  - If the patterns is empty, will take effect on all the domain names.
+  - 通配符 `_` 必须在字符串的末尾。 例如， `chaos-_.org` 无效。
+  - 如果模式为空，将对所有域名生效。
 
-- **selector**: Specifies the target pods for chaos injection. For more details, see [Define the Scope of Chaos Experiment](../user_guides/experiment_scope.md).
+- **选择器**: 指定用于故障注入的目标点. 欲了解更多详情，请参阅 [定义Chaos 实验范围](../user_guides/experiment_scope.md)。
 
-## Notes
+## 注
 
-- Currently, DNSChaos only supports record types `A` and `AAAA`.
-- The chaos DNS service runs CoreDNS with the [k8s_dns_chaos](https://github.com/chaos-mesh/k8s_dns_chaos) plugin. If the CoreDNS service in your Kubernetes cluster contains some special configurations, you can edit configMap `dns-server-config` to make the configuration of the chaos DNS service consistent with that of the K8s CoreDNS service as shown below:
+- 目前，DNSChaos只支持记录类型 `A` and `AAAA`。
+- Chaos DNS 服务使用 [k8s_dns_chaos](https://github.com/chaos-mesh/k8s_dns_chaos) 插件运行 CoreDNS 。 如果你的 Kubernetes 集群中的 CoreDNS 服务包含一些特殊配置， 你可以编辑 configMap `dns-server-config` 来使chaos DNS 服务的配置与 K8s CoreDNS 服务的配置一致，如下所示：
 
   ```bash
-  kubectl edit configmap dns-server-config -n chaos-testing
+  kubectl 编辑 configmap dns-server-config -n chaos-测试
   ```
