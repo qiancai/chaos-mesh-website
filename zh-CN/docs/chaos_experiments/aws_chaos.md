@@ -1,29 +1,29 @@
 ---
-id: awschaos_experiment
+id: Audios_experience
 title: AwsChaos Experiment
 sidebar_label: AwsChaos Experiment
 ---
 
-This document introduces how to create AwsChaos experiments.
+本文档介绍如何创建 AwsChaos 实验。
 
-AwsChaos can help you inject faults into the specified AWS Instance, specifically `ec2-stop`, `ec2-restart` and `detach-volume`.
+AwsChaos可以帮助你将故障注入到指定的 AWS 实例中，特别是 `ec2-stop`, `ec2-重启` 和 `分离音量`。
 
-- **Ec2 Stop** action periodically stops the specified ec2 instance.
+- **Ec2 停止** 动作定期停止指定的 ec2 实例。
 
-- **Ec2 Restart** action periodically reboots the specified ec2 instance.
+- **Ec2 重启** 动作定期重启指定的 ec2 实例。
 
-- **Detach Volume** action detaches the storage volume from the specified ec2 instance.
+- **将音量** 动作从指定的 ec2 实例中分离存储音量。
 
-## Secret file
+## 秘密文件
 
-In order to facilitate the connection to the AWS cluster, you can first create a kubernetes secret file to store related information (such as access key id).
+为了便利与特设工作组集群的连接， 你可以首先创建一个 kubernetes 秘密文件来存储相关信息(例如访问密钥id)。
 
-Below is a sample `secret` file:
+下面是示例 `秘密` 文件：
 
 ```yaml
 apiVersion: v1
 kind: Secret
-metadata:
+metdata :
   name: cloud-key-secret
   namespace: chaos-testing
 type: Opaque
@@ -32,92 +32,90 @@ stringData:
   aws_secret_access_key: your-aws-secret-access-key
 ```
 
-- **name** defines the name of kubernetes secret.
-- **namespace** defines the namespace of kubernetes secret.
-- **aws_access_key_id** stores your AWS access key id.
-- **aws_secret_access_key** stores your AWS secret access key.
+- **name** 定义了 kubernetes 秘密的名称。
+- **命名空间** 定义了kubernetes 秘密的命名空间。
+- **aws_access_key_id** 存储你的 AWS 访问密钥ID。
+- **aws_secret_access_key** 存储你的 AWS 秘密访问密钥。
 
-## `ec2-stop` configuration file
+## `ec2-stop` 配置文件
 
-Below is a sample `ec2-stop` configuration file:
+下面是示例 `ec2-stop` 配置文件：
 
 ```yaml
-apiVersion: chaos-mesh.org/v1alpha1
+apiVersion: chaos-mesh。 rg/v1alpha1
 kind: AwsChaos
 metadata:
   name: ec2-stop-example
-  namespace: chaos-testing
+  namespace: chaos-test
 spec:
   action: ec2-stop
-  secretName: 'cloud-key-secret'
+  secret名称: 'cloud-key-secret'
   awsRegion: 'us-east-2'
   ec2Instance: 'your-ec2-instance-id'
   duration: '5m'
   scheduler:
-    cron: '@every 10m'
+    cron: '@ever 10m'
 ```
 
-For more details about stopping ec2 instance, see [docs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html).
+关于停止ec2实例的更多详情，请参阅 [docs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html)。
 
-For a detailed description of each field in the configuration template, see [`Fields description`](#fields-description).
+配置模板中每个字段的详细描述，请参阅 [`字段描述`](#fields-description)。
 
-## `ec2-restart` configuration file
+## `ec2-重启` 配置文件
 
-Below is a sample `ec2-restart` configuration file:
+下面是示例 `ec2 重启` 配置文件：
 
 ```yaml
-apiVersion: chaos-mesh.org/v1alpha1
+apiVersion: chaos-mesh。 rg/v1alpha1
 kind: AwsChaos
 metadata:
-  name: ec2-restart-example
+  name: ec2-resturn example
   namespace: chaos-testing
 spec:
-  action: ec2-restart
-  secretName: 'cloud-key-secret'
+  action: ec2-rehont
+  secret名称: 'cloud-key-secret'
   awsRegion: 'us-east-2'
   ec2Instance: 'your-ec2-instance-id'
   duration: '5m'
   scheduler:
-    cron: '@every 10m'
+    cron: '@ever 10m'
 ```
 
-For more details about rebooting ec2 instance, see [docs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-reboot.html).
+关于重启ec2实例的更多详情，请参阅 [docs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-reboot.html)。
 
-For a detailed description of each field in the configuration template, see [`Fields description`](#fields-description).
+配置模板中每个字段的详细描述，请参阅 [`字段描述`](#fields-description)。
 
-## `detach-volume` configuration file
+## `分离音量` 配置文件
 
-Below is a sample `detach-volume` configuration file:
+下面是一个示例 `分离音量` 配置文件：
 
 ```yaml
-apiVersion: chaos-mesh.org/v1alpha1
+apiVersion: chaos-mesh。 rg/v1alpha1
 kind: AwsChaos
 metadata:
-  name: ec2-detach-volume-example
-  namespace: chaos-testing
+  name: ec2-stop-example
+  namespace: chaos-test
 spec:
   action: ec2-stop
-  secretName: 'cloud-key-secret'
+  secret名称: 'cloud-key-secret'
   awsRegion: 'us-east-2'
   ec2Instance: 'your-ec2-instance-id'
-  volumeID: 'your-volume-id'
-  deviceName: '/dev/sdf'
   duration: '5m'
   scheduler:
-    cron: '@every 10m'
+    cron: '@ever 10m'
 ```
 
-For more details about detaching an Amazon EBS volume, see [docs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-detaching-volume.html).
+欲了解更多关于从Amazon EBS中分离出一卷的详情，请参阅 [docs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-detaching-volume.html)。
 
-For a detailed description of each field in the configuration template, see [`Fields description`](#fields-description).
+配置模板中每个字段的详细描述，请参阅 [`字段描述`](#fields-description)。
 
-## Fields description
+## 字段描述
 
-- **action** defines the specific chaos action for the AWS instance. Supported action: `ec2-stop` / `ec2-restart` / `detach-volume`.
-- **secretName** defines the kubernetes secret name used to store AWS information.
-- **awsRegion** defines the AWS region.
-- **ec2Instance** indicates the ID of the ec2 instance.
-- **volumeID** is needed in `detach-volume` action. It indicates the ID of the EBS volume.
-- **deviceName** is needed in `detach-volume` action. It indicates the name of the device.
-- **duration** defines the duration for each chaos experiment.
-- **scheduler** defines the scheduler rules for the running time of the chaos experiment. For more rule information, see [robfig/cron](https://godoc.org/github.com/robfig/cron).
+- **动作** 定义了特定的 AWS 实例的 chaos 操作。 支持的动作： `ec2-stop` / `ec2-重启` / `分离音量`。
+- **secretName** 定义了用于存储 AWS 信息的 kubernetes 秘密名称。
+- **awsregion** 定义了 AWS 区域。
+- **ec2实例** 表示了 ec2 实例的 ID。
+- **音量ID** 需要在 `独立音量` 动作。 它表示EBS卷的 ID。
+- **设备名称** 需要在 `独立音量` 动作。 它表示设备的名称。
+- **持续时间** 定义了每次混乱状态实验的持续时间。
+- **调度器** 定义了混乱状态实验运行时间的调度规则。 欲了解更多规则信息，请参阅 [robfig/cron](https://godoc.org/github.com/robfig/cron)。
