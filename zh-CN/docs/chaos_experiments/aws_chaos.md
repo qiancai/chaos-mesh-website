@@ -59,7 +59,7 @@ spec:
 
 关于停止ec2实例的更多详情，请参阅 [docs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html)。
 
-配置模板中每个字段的详细描述，请参阅 [`字段描述`](#fields-description)。
+关于配置模板中每个字段的详细描述，请参阅 [`字段描述`](#fields-description)。
 
 ## `ec2-重启` 配置文件
 
