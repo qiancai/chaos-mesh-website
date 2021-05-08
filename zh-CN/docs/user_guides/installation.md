@@ -1,23 +1,23 @@
 ---
-id: installation
-title: Installation
+id: 安装
+title: 安装
 ---
 
-import PickVersion from '@site/src/components/PickVersion'
+从 '@site/src/components/PickVersion' 导入选取版本
 
-This document describes how to install Chaos Mesh to perform chaos experiments against your application in Kubernetes.
+此文档描述了如何安装Chaos Mesh来对你在 Kubernetes 的应用程序进行混乱试验。
 
-If you want to try Chaos Mesh on your laptop (Linux or macOS), you can refer the following two documents:
+如果你想在膝上型计算机上尝试Chaos Mesh(Linux或macOS)，你可以参考以下两个文档：
 
-- [Get started on kind](../get_started/get_started_on_kind.md)
-- [Get started on minikube](../get_started/get_started_on_minikube.md)
+- [开始实物版](../get_started/get_started_on_kind.md)
+- [从迷你土豆开始](../get_started/get_started_on_minikube.md)
 
-## Prerequisites
+## 必备条件
 
-Before deploying Chaos Mesh, make sure the following items have been installed:
+在部署Chaos Mesh之前，请确保以下物品已经安装：
 
-- Kubernetes version >= 1.12
-- [RBAC](https://kubernetes.io/docs/admin/authorization/rbac) enabled (optional)
+- Kubernetes 版本 >= 1.12。
+- [RBAC](https://kubernetes.io/docs/admin/authorization/rbac) 已启用 (可选)
 
 ## Install Chaos Mesh
 
@@ -25,178 +25,178 @@ Before deploying Chaos Mesh, make sure the following items have been installed:
   curl -sSL https://mirrors.chaos-mesh.org/latest/install.sh | bash
 </PickVersion>
 
-The above command installs all the CRDs, required service account configuration, and all components. Before you start running a chaos experiment, verify if Chaos Mesh is installed correctly.
+上述命令将安装所有CRD，所需的服务账户配置以及所有组件。 在你开始运行混乱实验之前，请验证Chaos Mesh是否正确安装。
 
-If you are using k3s or k3d, please also specify `--k3s` flag.
+如果你使用 k3s 或 k3d，请同时指定 `--k3 s` 标记。
 
 <PickVersion className="language-bash">
-  curl -sSL https://mirrors.chaos-mesh.org/latest/install.sh | bash -s -- --k3s
+  curl -sSL https://mirrors.chaos-mesh.org/latest/install.sh | bash - --k3s
 </PickVersion>
 
-> **Note:**
+> **注：**
 > 
-> `install.sh` is suitable for trying Chaos Mesh out. If you want to use Chaos Mesh in production or other serious scenarios, Helm is the recommended deployment method.
+> `install.sh` 适合尝试Chaos Mesh 如果你想在生产或其他严重场景中使用Chaos Mesh，Helm 是推荐的部署方法。
 
-### Verify your installation
+### 验证你的安装
 
-Verify if Chaos Mesh is running (For the use of _kubectl_, you can refer to the [documentation](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands).)
+验证Chaos Mesh 是否在运行(使用 _kubectl_, 你可以参考 [文档](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands).)
 
 ```bash
 kubectl get pod -n chaos-testing
 ```
 
-Expected output:
+预期输出：
 
 ```bash
-NAME                                        READY   STATUS    RESTARTS   AGE
-chaos-controller-manager-6d6d95cd94-kl8gs   1/1     Running   0          3m40s
-chaos-daemon-5shkv                          1/1     Running   0          3m40s
-chaos-dashboard-d998856f6-vgrjs             1/1     Running   0          3m40s
+命名重命名STATUS RESTARTS AGE
+chaos-controller-manager-6d6d95cd94kl8gs 1/1 Running 0 3m40s
+chaos-daemon-5shkv 1/1 Running 0 3m40s
+chaos-d98856f6-vgrjs 1/1 Running 0 3m40s
 ```
 
-## Uninstallation
+## 正在卸载
 
-You can uninstall Chaos Mesh by deleting the namespace.
+你可以通过删除命名空间卸载Chaos Mesh。
 
 <PickVersion className="language-bash">
-  curl -sSL https://mirrors.chaos-mesh.org/latest/install.sh | bash -s -- --template | kubectl delete -f -
+  curl -sSL https://mirrors.chaos-mesh.org/latest/install.sh | bash -s -- --template | kubectl delete -f
 </PickVersion>
 
-## Install by helm
+## 由头盔安装
 
-You also can install Chaos Mesh by [helm](https://helm.sh). Before you start installing, make sure that helm v2 or helm v3 is installed correctly.
+你也可以通过 [头盔](https://helm.sh) 安装Chaos Mesh。 在你开始安装之前，请确保头盔 v2 或 helm v3 安装正确。
 
-### Step 1: Add Chaos Mesh repository to Helm repos
-
-```bash
-helm repo add chaos-mesh https://charts.chaos-mesh.org
-```
-
-After adding the repository successfully, you can search available version by the following command:
+### 第 1 步：将Chaos Mesh仓库添加到Helm repos
 
 ```bash
-helm search repo chaos-mesh
+helm repo 添加 chaos-mesh https://charts.chaos-mesh.org
 ```
 
-### Step 2: Install Chaos Mesh
+添加仓库成功后，你可以通过以下命令搜索可用版本：
 
-Depending on your environment, there are two methods of installing Chaos Mesh:
+```bash
+头盔搜索 repo chaos-mesh
+```
 
-- Install in Docker environment
+### 步骤 2: 安装Chaos Mesh
 
-  1. Create namespace `chaos-testing`:
+根据你的环境，有两种安装Chaos Mesh的方法：
 
-     ```bash
-     kubectl create ns chaos-testing
-     ```
+- 在Docker环境中安装
 
-  2. Install Chaos Mesh using helm:
-
-     - For helm 2.X
+  1. 创建命名空间 `chaos-测试`:
 
      ```bash
-     helm install chaos-mesh/chaos-mesh --name=chaos-mesh --namespace=chaos-testing
+     kubectl 创建 ns chaos-测试
      ```
 
-     - For helm 3.X
+  2. 使用头盔安装Chaos Mesh
+
+     - 对于头盔 2.X
 
      ```bash
-     helm install chaos-mesh chaos-mesh/chaos-mesh --namespace=chaos-testing
+     helm install chaos-mesh/chaos-mesh --namespace=chaos-testh
      ```
 
-  3. Check whether Chaos Mesh pods are installed:
+     - 对于helm 3.X
 
      ```bash
-     kubectl get pods --namespace chaos-testing -l app.kubernetes.io/instance=chaos-mesh
+     helm install chaos-mesh chaos-mesh/chaos-mesh --namespace=chaos-treatment
      ```
 
-     Expected output:
+  3. 检查Chaos Mesh pod是否安装：
 
      ```bash
-     NAME                                        READY   STATUS    RESTARTS   AGE
-     chaos-controller-manager-6d6d95cd94-kl8gs   1/1     Running   0          3m40s
-     chaos-daemon-5shkv                          1/1     Running   0          3m40s
-     chaos-daemon-jpqhd                          1/1     Running   0          3m40s
-     chaos-daemon-n6mfq                          1/1     Running   0          3m40s
-     chaos-dashboard-d998856f6-vgrjs             1/1     Running   0          3m40s
+     kubectl 获取 pods --namespace chaos-test-l app.kubernetes.io/instance=chaos-mesh
      ```
 
-- Install in containerd environment (kind)
-
-  1. Create namespace `chaos-testing`:
+     预期输出：
 
      ```bash
-     kubectl create ns chaos-testing
+     命名重命名STATUS RESTARTS AGE
+     chaos-controller-manager-6d6d95cd94kl8gs 1/1 Running 0 3m40s
+     chaos-daemon-5shkv 1/1 Running 0 3m40s
+     chaos-daemon-jpqhd 1/1 Running 0 3m40s
+     chaos-daemon-n6mfq 1/1 Running 0 3m40s
+     chaos-dashboard-d99856f6-vgrjs 1/1 Running 0 3m40s
      ```
 
-  2. Install Chaos Mesh using helm:
+- 在容器环境中安装(kind)
 
-     - for helm 2.X
+  1. 创建命名空间 `chaos-测试`:
 
      ```bash
-     helm install chaos-mesh/chaos-mesh --name=chaos-mesh --namespace=chaos-testing --set chaosDaemon.runtime=containerd --set chaosDaemon.socketPath=/run/containerd/containerd.sock
+     kubectl 创建 ns chaos-测试
      ```
 
-     - for helm 3.X
+  2. 使用头盔安装Chaos Mesh
+
+     - 为头盔 2.X
 
      ```bash
-     helm install chaos-mesh chaos-mesh/chaos-mesh --namespace=chaos-testing --set chaosDaemon.runtime=containerd --set chaosDaemon.socketPath=/run/containerd/containerd.sock
+     helm install chaos-mesh/chaos-mesh--namespace=chaos-test-set chaosDaemon.runtime=containerd --set chaemon.socketPath=/run/containerd/containerd.sock
      ```
 
-  3. Check whether Chaos Mesh pods are installed:
+     - 适合头盔 3.X
 
      ```bash
-     kubectl get pods --namespace chaos-testing -l app.kubernetes.io/instance=chaos-mesh
+     helm install chaos-mesh chaos-mesh/chaos-mesh --namespace=chaos-test-set chaosDaemon.runtime=containerd --set chaemon.socketPath=/run/containerd/containerd.sock
      ```
 
-     Expected output:
+  3. 检查Chaos Mesh pod是否安装：
 
      ```bash
-     NAME                                        READY   STATUS    RESTARTS   AGE
-     chaos-controller-manager-6d6d95cd94-kl8gs   1/1     Running   0          3m40s
-     chaos-daemon-5shkv                          1/1     Running   0          3m40s
-     chaos-daemon-jpqhd                          1/1     Running   0          3m40s
-     chaos-daemon-n6mfq                          1/1     Running   0          3m40s
-     chaos-dashboard-d998856f6-vgrjs             1/1     Running   0          3m40s
+     kubectl 获取 pods --namespace chaos-test-l app.kubernetes.io/instance=chaos-mesh
      ```
 
-- Install in containerd environment (k3s)
-
-  1. Create namespace `chaos-testing`:
+     预期输出：
 
      ```bash
-     kubectl create ns chaos-testing
+     命名重命名STATUS RESTARTS AGE
+     chaos-controller-manager-6d6d95cd94kl8gs 1/1 Running 0 3m40s
+     chaos-daemon-5shkv 1/1 Running 0 3m40s
+     chaos-daemon-jpqhd 1/1 Running 0 3m40s
+     chaos-daemon-n6mfq 1/1 Running 0 3m40s
+     chaos-dashboard-d99856f6-vgrjs 1/1 Running 0 3m40s
      ```
 
-  2. Install Chaos Mesh using helm:
+- 在容器环境中安装 (k3s)
 
-     - for helm 2.X
+  1. 创建命名空间 `chaos-测试`:
 
      ```bash
-     helm install chaos-mesh/chaos-mesh --name=chaos-mesh --namespace=chaos-testing --set chaosDaemon.runtime=containerd --set chaosDaemon.socketPath=/run/k3s/containerd/containerd.sock
+     kubectl 创建 ns chaos-测试
      ```
 
-     - for helm 3.X
+  2. 使用头盔安装Chaos Mesh
+
+     - 为头盔 2.X
 
      ```bash
-     helm install chaos-mesh chaos-mesh/chaos-mesh --namespace=chaos-testing --set chaosDaemon.runtime=containerd --set chaosDaemon.socketPath=/run/k3s/containerd/containerd.sock
+     helm install chaos-mesh/chaos-mesh--namespace=chaos-test-set chaosDaemon.runtime=containerd --set chaemon.socketPath=/run/k3s/containerd/containerd.sock
      ```
 
-  3. Check whether Chaos Mesh pods are installed:
+     - 适合头盔 3.X
 
      ```bash
-     kubectl get pods --namespace chaos-testing -l app.kubernetes.io/instance=chaos-mesh
+     helm install chaos-mesh chaos-mesh/chaos-mesh --namespace=chaos-test-set chaosDaemon.runtime=containerd --set chaemon.socketPath=/run/k3s/containerd/containerd.sock
      ```
 
-     Expected output:
+  3. 检查Chaos Mesh pod是否安装：
 
      ```bash
-     NAME                                        READY   STATUS    RESTARTS   AGE
-     chaos-controller-manager-6d6d95cd94-kl8gs   1/1     Running   0          3m40s
-     chaos-daemon-5shkv                          1/1     Running   0          3m40s
-     chaos-daemon-jpqhd                          1/1     Running   0          3m40s
-     chaos-daemon-n6mfq                          1/1     Running   0          3m40s
-     chaos-dashboard-d998856f6-vgrjs             1/1     Running   0          3m40s
+     kubectl 获取 pods --namespace chaos-test-l app.kubernetes.io/instance=chaos-mesh
      ```
 
-After executing the above commands, you should be able to see the output indicating that all Chaos Mesh pods are up and running. Otherwise, check the current environment according to the prompt message or create an [issue](https://github.com/chaos-mesh/chaos-mesh/issues) for help.
+     预期输出：
+
+     ```bash
+     命名重命名STATUS RESTARTS AGE
+     chaos-controller-manager-6d6d95cd94kl8gs 1/1 Running 0 3m40s
+     chaos-daemon-5shkv 1/1 Running 0 3m40s
+     chaos-daemon-jpqhd 1/1 Running 0 3m40s
+     chaos-daemon-n6mfq 1/1 Running 0 3m40s
+     chaos-dashboard-d99856f6-vgrjs 1/1 Running 0 3m40s
+     ```
+
+在执行上述命令后，你应该能够看到所有Chaos Mesh pods都已上线并运行的输出。 Otherwise, check the current environment according to the prompt message or create an [issue](https://github.com/chaos-mesh/chaos-mesh/issues) for help.
