@@ -107,7 +107,7 @@ spec:
 
 欲了解更多关于从Amazon EBS中分离出一卷的详情，请参阅 [docs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-detaching-volume.html)。
 
-配置模板中每个字段的详细描述，请参阅 [`字段描述`](#fields-description)。
+关于配置模板中每个字段的详细描述，请参阅 [`字段描述`](#fields-description)。
 
 ## 字段描述
 
@@ -118,4 +118,4 @@ spec:
 - **音量ID** 需要在 `独立音量` 动作。 它表示EBS卷的 ID。
 - **设备名称** 需要在 `独立音量` 动作。 它表示设备的名称。
 - **持续时间** 定义了每次混乱状态实验的持续时间。
-- **调度器** 定义了混乱状态实验运行时间的调度规则。 欲了解更多规则信息，请参阅 [robfig/cron](https://godoc.org/github.com/robfig/cron)。
+- **调度器** 定义了混乱状态实验运行时间的调度规则。 如果要了解更多规则信息，请参阅 [robfig/cron](https://godoc.org/github.com/robfig/cron)。
