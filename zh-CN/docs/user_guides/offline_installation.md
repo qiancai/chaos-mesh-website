@@ -1,186 +1,186 @@
 ---
-id: offline_installation
-title: Offline Installation
+id: 离线安装
+title: 离线安装
 ---
 
-This document describes how to install Chaos Mesh in an offline environment.
+此文档描述了如何在离线环境中安装Chaos Mesh。
 
-## Prerequisites
+## 必备条件
 
-Before deploying Chaos Mesh, make sure the following items have been installed:
+在部署Chaos Mesh之前，请确保以下物品已经安装：
 
-- Kubernetes version >= 1.12
-- [RBAC](https://kubernetes.io/docs/admin/authorization/rbac) enabled (optional)
-- Docker
+- Kubernetes 版本 >= 1.12。
+- [RBAC](https://kubernetes.io/docs/admin/authorization/rbac) 已启用 (可选)
+- 停靠栏
 
-## Prepare the installation file
+## 准备安装文件
 
-To install Chaos Mesh offline, you need to get the installation images via an internet connection. Take the steps below:
+若要离线安装Chaos Mesh，你需要通过互联网连接获取安装图像。 采取以下步骤：
 
-1. Specify the version you want to install:
+1. 指定你想要安装的版本：
 
    ```bash
-   export CHAOS_MESH_VERSION="v1.1.0"
+   导出 CHAOS_MESH_VERSION="v1.1.0"
    ```
 
-   > **Note:**
+   > **注：**
    > 
-   > It is recommended that you use a stable release, or you can set the version to `latest` if you want to experience the latest features that are under development.
+   > 建议你使用稳定的发布方式。 或者如果你想要体验正在开发中的最新功能，你可以将版本设置为 `最新的`。
 
-2. Archive the docker images of Chaos Mesh:
+2. 存档Chaos Mesh的停泊器图像：
 
    ```bash #pull images of Chaos Mesh
-   docker pull pingcap/chaos-mesh:${CHAOS_MESH_VERSION}
-   docker pull pingcap/chaos-daemon:${CHAOS_MESH_VERSION}
-   docker pull pingcap/chaos-dashboard:${CHAOS_MESH_VERSION}
-   docker pull pingcap/coredns:v0.2.0
+   Docker prapingcap/chaos-mesh:${CHAOS_MESH_VERSION}
+   docker prapingcap/chaos-daemon:${CHAOS_MESH_VERSION}
+   docker prapingcap/chaos-dashboard:${CHAOS_MESH_VERSION}
+   docker prapingcap/coredns:v0.2.0
    ```
 
    ```bash #save images of Chaos Mesh to files
-   docker save -o ./image-chaos-mesh pingcap/chaos-mesh:${CHAOS_MESH_VERSION}
-   docker save -o ./image-chaos-daemon pingcap/chaos-daemon:${CHAOS_MESH_VERSION}
-   docker save -o ./image-chaos-dashboard pingcap/chaos-dashboard:${CHAOS_MESH_VERSION}
+   码头保存 -o ./image-chaos-mesh pingcap/chaos-mesh:${CHAOS_MESH_VERSION}
+   码头保存 -o . image-chaos-daemon pingcap/chaos-daemon:${CHAOS_MESH_VERSION}
+   docker save -o 。 image-chaos-dashboard pingcap/chaos-dashboard:${CHAOS_MESH_VERSION}
    docker save -o ./image-chaos-coredns pingcap/coredns:v0.2.0
    ```
 
-3. Download the Chaos Mesh repository to your local:
+3. 下载Chaos Mesh仓库到你的本地：
 
    ```bash
    wget "https://github.com/chaos-mesh/chaos-mesh/archive/${CHAOS_MESH_VERSION}.zip"
    ```
 
-   Or you can download the latest unstable version:
+   或者你可以下载最新的不稳定版本：
 
    ```bash
    wget https://github.com/chaos-mesh/chaos-mesh/archive/master.zip
    ```
 
-4. Copy the `./image-chaos-mesh`, `./image-chaos-daemon`, `./image-chaos-dashboard`, and `{CHAOS_MESH_VERSION}.zip` into the offline environment.
+4. 复制 `./image-chaos-mesh`, `./image-chaos-daemon`, `./image-chaos-dashboard`, 和 `{CHAOS_MESH_VERSION}.zip` 进入离线环境。
 
-## Install Chaos Mesh offline
+## 离线安装 Chaos Mesh
 
-Now that you already have the image and repo archive files in the offline environment, start installing Chaos Mesh.
+现在你已经有了离线环境中的图像和Repo归档文件，开始安装 Chaos Mesh。
 
-1. Specify the version you are going to install in the offline environment:
+1. 指定你要在离线环境中安装的版本：
 
    ```bash
-   export CHAOS_MESH_VERSION="v1.1.0"
+   导出 CHAOS_MESH_VERSION="v1.1.0"
    ```
 
-2. Load the image from the archive files:
+2. 从归档文件加载图像：
 
    ```bash
    docker load -i ./image-chaos-mesh
    docker load -i ./image-chaos-daemon
-   docker load -i ./image-chaos-dashboard
+   docker load -i ./image-chaos-daemon
    docker load -i ./image-chaos-coredns
    ```
 
-3. Push the Chaos Mesh images. You can choose to push them to Docker Registry or Docker Hub.
+3. 推送Chaos Mesh图像。 你可以选择将他们推送到Docker 注册表或Docker Hub。
 
-   - Push images to Docker Registry
+   - 将图像推送到基座注册表
 
-     a. Set the Docker Registry variable, for example:
+     a. 设置 Docker 注册表变量，例如：
 
      ```bash
-     export DOCKER_REGISTRY=localhost:5000
+     导出 DOCKER_REGISTRY=localhost:5000
      ```
 
-     b. Tag these images with `$DOCKER_REGISTRY`:
+     b. 会议文件。 用 `$DOCKER_REGISTRY标记这些图像`
 
      ```bash
-     export CHAOS_MESH_IMAGE=$DOCKER_REGISTRY/pingcap/chaos-mesh:${CHAOS_MESH_VERSION}
-     export CHAOS_DAEMON_IMAGE=$DOCKER_REGISTRY/pingcap/chaos-daemon:${CHAOS_MESH_VERSION}
-     export CHAOS_DASHBOARD_IMAGE=$DOCKER_REGISTRY/pingcap/chaos-dashboard:${CHAOS_MESH_VERSION}
-     export CHAOS_COREDNS_IMAGE=$DOCKER_REGISTRY/pingcap/coredns:v0.2.0
+     导出 CHAOS_MESH_IMAGE=$DOCKER_REGISTRY/pingcap/chaos-mesh:${CHAOS_MESH_VERSION}
+     导出 CHAOS_DAEMON_IMAGE=$DOCKER_REGISTRY/pingcap/chaos-daemon:${CHAOS_MESH_VERSION}
+     导出 CHAOS_DASHBOARD_IMAGE=$DOCKER_REGISTRY/pingcap/chaos-dashboard:${CHAOS_MESH_VERSION}
+     导出 CHAOS_COREDNS_IMAGE=$DOCKER_REGISTRY/ping/cap/coredns:v0。 0
      docker image tag pingcap/chaos-mesh:${CHAOS_MESH_VERSION} $CHAOS_MESH_IMAGE
      docker image tag pingcap/chaos-daemon:${CHAOS_MESH_VERSION} $CHAOS_DAEMON_IMAGE
      docker image tag pingcap/chaos-dashboard:${CHAOS_MESH_VERSION} $CHAOS_DASHBOARD_IMAGE
-     docker image tag pingcap/coredns:v0.2.0 $CHAOS_COREDNS_IMAGE
+     docker image tag pingcap/coredns:v0. 0 $CHAOS_COREDNS_IMAGE
      ```
 
-     c. Push these images to Docker Registry:
+     b. 会议文件。 推送这些图像到 Docker 注册表：
 
      ```bash
-     docker push $CHAOS_MESH_IMAGE
-     docker push $CHAOS_DAEMON_IMAGE
-     docker push $CHAOS_DASHBOARD_IMAGE
-     docker push $CHAOS_COREDNS_IMAGE
+     停泊船推送 $CHAOS_MESH_IMAGE
+     停泊船推送 $CHAOS_DAEMON_IMAGE
+     停泊船推送 $CHAOS_DASHBOARD_IMAGE
+     停泊船推送 $CHAOS_COREDNS_IMAGE
      ```
 
-     > **Note:**
+     > **注：**
      > 
-     > If the Docker Registry can only work locally, you need to load and push these images on each K8s node.
+     > 如果Docker 注册表只能在本地工作，你需要在每个K8s节点上加载和推送这些图像。
 
-   - Push images to Docker Hub
+   - 将图像推送到Docker Hub
 
-     a. Set the Docker Hub variable, for example:
+     a. 设置 Docker Hub 变量，例如:
 
      ```bash
-     export DOCKER_HUB=hub
+     导出 DOCKER_HUB=中心
      ```
 
-     b. Tag these images with `$DOCKER_REGISTRY`:
+     b. 会议文件。 用 `$DOCKER_REGISTRY标记这些图像`
 
      ```bash
-     export CHAOS_MESH_IMAGE=$DOCKER_HUB/chaos-mesh:${CHAOS_MESH_VERSION}
-     export CHAOS_DAEMON_IMAGE=$DOCKER_HUB/chaos-daemon:${CHAOS_MESH_VERSION}
-     export CHAOS_DASHBOARD_IMAGE=$DOCKER_HUB/chaos-dashboard:${CHAOS_MESH_VERSION}
-     export CHAOS_COREDNS_IMAGE=$DOCKER_HUB/coredns:v0.2.0
+     导出 CHAOS_MESH_IMAGE=$DOCKER_HUB/chaos-mesh:${CHAOS_MESH_VERSION}
+     导出 CHAOS_DAEMON_IMAGE=$DOCKER_HUB/chaos-daemon:${CHAOS_MESH_VERSION}
+     导出 CHAOS_DASHBOARD_IMAGE=$DOCKER_HUB/chaos-dashboard:${CHAOS_MESH_VERSION}
+     导出 CHAOS_COREDNS_IMAGE=$DOCKER_HUB/coredns:v0.2.
      docker image tag pingcap/chaos-mesh:${CHAOS_MESH_VERSION} $CHAOS_MESH_IMAGE
      docker image tag pingcap/chaos-daemon:${CHAOS_MESH_VERSION} $CHAOS_DAEMON_IMAGE
      docker image tag pingcap/chaos-dashboard:${CHAOS_MESH_VERSION} $CHAOS_DASHBOARD_IMAGE
-     docker image tag pingcap/coredns:v0.2.0 $CHAOS_COREDNS_IMAGE
+     docker image tag pingcap/coredns:v0. 0 $CHAOS_COREDNS_IMAGE
      ```
 
-     c. Push these images to Docker Registry:
+     b. 会议文件。 推送这些图像到 Docker 注册表：
 
      ```bash
-     docker push $CHAOS_MESH_IMAGE
-     docker push $CHAOS_DAEMON_IMAGE
-     docker push $CHAOS_DASHBOARD_IMAGE
-     docker push $CHAOS_COREDNS_IMAGE
+     停泊船推送 $CHAOS_MESH_IMAGE
+     停泊船推送 $CHAOS_DAEMON_IMAGE
+     停泊船推送 $CHAOS_DASHBOARD_IMAGE
+     停泊船推送 $CHAOS_COREDNS_IMAGE
      ```
 
-4. Install Chaos Mesh offline with the following steps:
+4. 通过以下步骤安装Chaos Mesh 离线：
 
-   a. Unzip the repo archive files to a path:
+   a. 解压缩仓库文件到路径：
 
    ```bash
    unzip ${CHAOS_MESH_VERSION}.zip -d chaos-mesh && cd chaos-mesh/*/
    ```
 
-   b. Create a namespace for installing Chaos Mesh:
+   b. 会议文件。 创建一个用于安装Chaos Mesh的命名空间：
 
    ```bash
-   kubectl create namespace chaos-testing
+   kubectl 创建命名空间chaos-测试
    ```
 
-   c. Install Chaos Mesh by helm:
+   b. 会议文件。 用头盔安装Chaos Mesh
 
    ```bash
-   helm install chaos-mesh helm/chaos-mesh  --namespace=chaos-testing \
-      --set dashboard.create=true \
+   helm install chaos-mesh helm/chaos-mesh --namespace=chaos-test。
+      --set 仪表板 reate=true \
       --set dnsServer.create=true \
-      --set chaosDaemon.image=$CHAOS_DAEMON_IMAGE \
-      --set controllerManager.image=$CHAOS_MESH_IMAGE \
-      --set dashboard.image=$CHAOS_DASHBOARD_IMAGE \
+      --set chaosDaemon mage=$CHAOS_DAEMON_IMAGE \
+      --set ControllerManager.image=$CHAOS_MESH_IMAGE \
+      --set 仪表板 mage=$CHAOS_DASHBOARD_IMAGE \
       --set dnsServer.image=${CHAOS_COREDNS_IMAGE}
    ```
 
-   d. Check whether Chaos Mesh pods are installed:
+   b. 平均输出功率超过1瓦； 检查Chaos Mesh pod是否安装：
 
    ```bash #get pods of Chaos Mesh
-   kubectl get pods --namespace chaos-testing -l app.kubernetes.io/instance=chaos-mesh
+   kubectl 获取 pods --namespace chaos-test-l app.kubernetes.io/instance=chaos-mesh
    ```
 
-   Expected output:
+   预期输出：
 
    ```bash
-   NAME                                        READY   STATUS    RESTARTS   AGE
-   chaos-controller-manager-6d6d95cd94-kl8gs   1/1     Running   0          3m40s
-   chaos-daemon-5shkv                          1/1     Running   0          3m40s
-   chaos-dashboard-d998856f6-vgrjs             1/1     Running   0          3m40s
+   命名重命名STATUS RESTARTS AGE
+   chaos-controller-manager-6d6d95cd94kl8gs 1/1 Running 0 3m40s
+   chaos-daemon-5shkv 1/1 Running 0 3m40s
+   chaos-d98856f6-vgrjs 1/1 Running 0 3m40s
    ```
 
-   After executing the above commands, you should be able to see the output indicating that all Chaos Mesh pods are up and running. Otherwise, check the current environment according to the prompt message or create an [issue](https://github.com/chaos-mesh/chaos-mesh/issues) for help.
+   在执行上述命令后，你应该能够看到所有Chaos Mesh pods都已上线并运行的输出。 Otherwise, check the current environment according to the prompt message or create an [issue](https://github.com/chaos-mesh/chaos-mesh/issues) for help.
