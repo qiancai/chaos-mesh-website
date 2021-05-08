@@ -1,79 +1,79 @@
 ---
-id: experiment_scope
-title: Define the Scope of Chaos Experiment
-sidebar_label: Define the Scope of Chaos Experiment
+id: 实验范围
+title: 定义Chaos实验的范围
+sidebar_label: 定义Chaos实验的范围
 ---
 
-This document describes how to define the scope of a chaos experiment.
+本文件介绍了如何界定混乱试验的范围。
 
-Chaos Mesh provides a variety of selectors, which you can use to define the scope of your chaos experiment. These selectors are defined in the `spec.selector` field of the chaos object.
+Chaos Mesh提供了各种选择器，你可以用来定义你的混乱实验范围。 这些选择器是在 `spec.selector` chaos object中定义的。
 
-## Namespace selectors
+## 命名空间选择器
 
-Namespace selectors filter the chaos experiment targets by the namespace. Defined as a set of strings. The default namespace selector for Chaos Mesh is the chaos experiment object. For example:
+命名空间选择器通过命名空间筛选chaos实验目标。 定义为一组字符串。 Chaos Mesh的默认命名空间选择器是chaos实验对象。 例如：
 
 ```yaml
-spec:
-  selector:
-    namespaces:
-      - 'app-ns'
+示例：
+  选择器：
+    命名空间：
+      - “app-ns”
 ```
 
-## Label selectors
+## 标签选择器
 
-Label selectors filter chaos experiment targets by the label. Defined as a map of string keys and values. For example:
+标签选择器筛选器通过标签筛选实验目标。 定义为字符串键和值的映射。 例如：
 
 ```yaml
-spec:
-  selector:
-    labelSelectors:
+示例：
+  选择器：
+    标签选择器：
       'app.kubernetes.io/component': 'tikv'
 ```
 
-## Annotation selectors
+## 批注选择器
 
-Annotation selectors filter chaos experiment targets by the annotation. Defined as a map of string keys and values. For example:
+批注选择器过滤批量测试目标。 定义为字符串键和值的映射。 例如：
 
 ```yaml
-spec:
-  selector:
-    annotationSelectors:
-      'example-annotation': 'group-a'
+示例：
+  选择器：
+    批注选择器：
+      '示例注释'：'group-a'
 ```
 
-## Field selectors
+## 字段选择器
 
-Field selectors filter chaos experiment targets by the resource field. Defined as a map of string keys and values. For example:
+字段选择器过滤按资源字段的实验目标。 定义为字符串键和值的映射。 例如：
 
 ```yaml
-spec:
-  selector:
-    fieldSelectors:
-      'metadata.name': 'my-pod'
+示例：
+  选择器：
+    field Selector：
+      'metadata.name'：'my-pod'
 ```
 
-For more details about field selectors, refer to the [Kubernetes document](https://kubernetes.io/docs/concepts/overview/working-with-objects/field-selectors/).
+欲了解更多字段选择器的详情，请参阅 [Kubernetes文档](https://kubernetes.io/docs/concepts/overview/working-with-objects/field-selectors/)。
 
-## Pod phase selectors
+## Pod 相位选择器
 
-Pod Phase selectors filter chaos experiment targets by the condition. Defined as a set of string. Supported conditions: `Pending`, `Running`, `Succeeded`, `Failed`, `Unknown`. For example:
+Pod Phase 选择器筛选器按条件筛选测试目标。 定义为一组字符串。 支持的条件： `待处理`, `运行`, `成功`, `失败`, `未知`. 例如：
 
 ```yaml
-spec:
-  selector:
-    podPhaseSelectors:
-      - 'Running'
+示例：
+  选择器：
+    podPhaseSelector：
+      - '运行'
 ```
 
-## Pod selectors
+## Pod 选择器
 
-Pod selectors filter chaos experiment targets by the pod. Defined as a map of string keys and values. The key in this map specifies the namespace which the pods belong to, and each value under the key is a pod. If this selector is not empty, these pod defined in this map are used directly and other defined selectors will be ignored. For example:
+Pod 选择器过滤剧情测试目标。 定义为字符串键和值的映射。 此地图中的密钥指定了pod所属的命名空间，而密钥下的每个值都是pod。 如果此选择器不是空的，则此地图中定义的这些诗句将直接使用，其它定义的选择器将被忽略。 例如：
 
 ```yaml
 spec:
-  selector:
+  选择器:
     pods:
-      tidb-cluster: # namespace of the target pods
+      tidb-cluster: # 目标点的命名空间
         - basic-tidb-0
         - basic-pd-0
         - basic-tikv-0
