@@ -64,7 +64,7 @@ spec:
 
 - **选择器**: 指定用于故障注入的目标点. 欲了解更多详情，请参阅 [定义Chaos 实验范围](../user_guides/experiment_scope.md)。
 
-## 注
+## 注意：
 
 - 目前，DNSChaos只支持记录类型 `A` and `AAAA`。
 - Chaos DNS 服务使用 [k8s_dns_chaos](https://github.com/chaos-mesh/k8s_dns_chaos) 插件运行 CoreDNS 。 如果您的 Kubernetes 集群中的 CoreDNS 服务包含一些特殊配置， 您可以编辑 configMap `dns-server-config` 来使chaos DNS 服务的配置与 K8s CoreDNS 服务的配置一致，如下所示：
