@@ -1,6 +1,6 @@
 ---
-id: stresschaos_experiment
-title: StressChaos Experiment
+id: stresschaos_实验
+title: StressChaos 实验
 sidebar_label: StressChaos Experiment
 ---
 
