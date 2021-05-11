@@ -1,5 +1,5 @@
 ---
-id: kernelchaos_experiment
+id: 内核chaos_expert
 title: KernelChaos Experiment
 sidebar_label: KernelChaos Experiment
 ---
