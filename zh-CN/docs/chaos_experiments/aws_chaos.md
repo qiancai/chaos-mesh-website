@@ -1,12 +1,12 @@
 ---
 id: Audios_experience
-title: AwsChaos Experiment
+title: AwsChaos 实验
 sidebar_label: AwsChaos Experiment
 ---
 
 本文档介绍了如何创建 AwsChaos 实验。
 
-AwsChaos可以帮助您将故障注入到指定的 AWS 实例中，特别是 `ec2-stop`, `ec2-重启` 和 `分离音量`。
+AwsChaos 可以帮助您将故障注入到指定的 AWS 实例中，特别是 `ec2-stop`, `ec2-重启` 和 `分离音量`。
 
 - **Ec2 停止** 动作定期停止指定的 ec2 实例。
 
