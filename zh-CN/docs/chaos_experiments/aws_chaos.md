@@ -8,7 +8,7 @@ sidebar_label: AwsChaos Experiment
 
 AwsChaos 可以帮助您将故障注入到指定的 AWS 实例中，特别是 `ec2-stop`, `ec2-重启` 和 `分离音量`。
 
-- **Ec2 停止** 动作定期停止指定的 ec2 实例。
+- **Ec2 暂停** 动作定期停止指定的 ec2 实例。
 
 - **Ec2 重启** 动作定期重启指定的 ec2 实例。
 
