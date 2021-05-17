@@ -1,5 +1,5 @@
 ---
-id: iochaos_expert
+id: iochaos_experience
 title: IOChaos 实验
 sidebar_label: IOChaos 实验
 ---
