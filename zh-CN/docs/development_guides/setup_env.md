@@ -83,10 +83,10 @@ kind delete cluster --name=kind
 > Bootstrap Chaos Dashboard. (Optional)
 > 
 > ```bash
-cd ui && yarn
-# Run it
-yarn start:default # cross-env REACT_APP_API_URL=http://localhost:2333 BROWSER=none react-scripts start
-```
+> cd ui && yarn
+> # Run it
+> yarn start:default # cross-env REACT_APP_API_URL=http://localhost:2333 BROWSER=none react-scripts start
+> ```
 
 ## Next step
 
